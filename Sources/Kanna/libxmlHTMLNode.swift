@@ -100,7 +100,12 @@ internal final class libxmlHTMLNode: XMLElement {
 
     var parent: XMLElement? {
         get {
-            return libxmlHTMLNode(document: doc, docPtr: docPtr!, node: (nodePtr?.pointee.parent)!)
+			guard
+				let node = nodePtr?.pointee.parent,
+				let docPtr = docPtr
+				else { return nil }
+
+			return libxmlHTMLNode(document: doc, docPtr: docPtr, node: node)
         }
 
         set {
